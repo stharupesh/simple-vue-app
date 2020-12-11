@@ -1,69 +1,45 @@
 import Vue from "vue";
 import Router from "vue-router";
-import AppHeader from "./layout/AppHeader";
-import AppFooter from "./layout/AppFooter";
-import Components from "./views/Components.vue";
-import Landing from "./views/Landing.vue";
-import Login from "./views/Login.vue";
-import Register from "./views/Register.vue";
-import Profile from "./views/Profile.vue";
+import VueRouteMiddleware from 'vue-route-middleware';
+import AuthMiddleware from '@/middlewares/auth';
 
 Vue.use(Router);
 
-export default new Router({
-  linkExactActiveClass: "active",
-  routes: [
-    {
-      path: "/",
-      name: "components",
-      components: {
-        header: AppHeader,
-        default: Components,
-        footer: AppFooter
-      }
+const router = new Router({
+    linkExactActiveClass: "active",
+    mode: 'history',
+    routes: [
+        {
+            path: '/user',
+            component: () => import('@/layout/FullPage.vue'),
+            children: [
+                {
+                    path: 'login',
+                    name: 'user.login',
+                    component: () => import('@/views/public/user/Login.vue')
+                }
+            ]
+        },
+        {
+            path: '/car',
+            component: () => import('@/layout/Main.vue'),
+            children: [
+                {
+                    path: 'in-stock',
+                    name: 'car.in-stock',
+                    component: () => import('@/views/car/CarsInStock.vue'),
+                    meta: {
+                        middleware: [AuthMiddleware]
+                    }
+                }
+            ]
+        },
+    ],
+    scrollBehavior() {
+        return {x: 0, y: 0}
     },
-    {
-      path: "/landing",
-      name: "landing",
-      components: {
-        header: AppHeader,
-        default: Landing,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/login",
-      name: "login",
-      components: {
-        header: AppHeader,
-        default: Login,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/register",
-      name: "register",
-      components: {
-        header: AppHeader,
-        default: Register,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/profile",
-      name: "profile",
-      components: {
-        header: AppHeader,
-        default: Profile,
-        footer: AppFooter
-      }
-    }
-  ],
-  scrollBehavior: to => {
-    if (to.hash) {
-      return { selector: to.hash };
-    } else {
-      return { x: 0, y: 0 };
-    }
-  }
 });
+
+router.beforeEach(VueRouteMiddleware());
+
+export default router

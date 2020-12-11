@@ -21,9 +21,39 @@ import router from "./router";
 import Argon from "./plugins/argon-kit";
 import './registerServiceWorker'
 
+/**
+ * VUEX STORE
+ */
+import store from './store/store'
+
+/**
+ * VEE VALIDATE
+ */
+import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
+import en from 'vee-validate/dist/locale/en.json';
+import { required, email } from 'vee-validate/dist/rules';
+
+// install rules and localization
+extend('email', {
+  ...email,
+  message: 'invalid email'
+});
+
+extend('required', {
+  ...required,
+  message: '* required'
+});
+
+localize('en', en);
+
+// Install components globally
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
+
 Vue.config.productionTip = false;
 Vue.use(Argon);
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
