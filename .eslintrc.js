@@ -13,13 +13,13 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     // ES6
-    'arrow-spacing': 'error',
-    'no-confusing-arrow': 'error',
-    'no-duplicate-imports': 'error',
-    'no-var': 'error',
-    'object-shorthand': 'error',
-    'prefer-const': 'error',
-    'prefer-template': 'error',
+    // 'arrow-spacing': 'error',
+    // 'no-confusing-arrow': 'error',
+    // 'no-duplicate-imports': 'error',
+    // 'no-var': 'error',
+    // 'object-shorthand': 'error',
+    // 'prefer-const': 'error',
+    // 'prefer-template': 'error',
 
     // Vue
     "vue/html-quotes": ["error", "double"]
