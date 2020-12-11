@@ -2,7 +2,7 @@ import apiConfig from '@/config/api.js'
 import request from '@/core/request.js'
 
 export default {
-	userLogin({ commit, state }) {
+	userLogin({ state }) {
 		return new Promise((resolve, reject) => {
 			request.withAPI(apiConfig.auth.login)
 
