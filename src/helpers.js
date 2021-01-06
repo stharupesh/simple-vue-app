@@ -12,7 +12,7 @@ export function mapFields(options) {
         return store.state[options.moduleKey] && store.getters[options.moduleKey + '/' + options.getter][field];
       },
       set(value) {
-        if(!store.state.login)
+        if(!store.state[options.moduleKey])
           return;
 
         store.commit(options.moduleKey + '/' + options.mutation, {
